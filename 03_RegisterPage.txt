@@ -1,0 +1,150 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+Documentation	Testing Sign-Up functionality. User Registration Test scenario with verification, valid and invalid credentials.
+
+# TODO: Write Precondition, Postcondition, Tags
+
+Pre Condition	Open Browser	
+Post Condition	Close all browsers
+Tags	Registration, TS-1-Registration
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+RegistrationUrl = https://gitlab.com/users/sign_up
+FirstName = XYZ
+LastName = XYZ
+Username = XYZ
+Email = XYZ
+Password = ***
+Invalid_Username = XYZZZZ
+Existing_Username = XYZ
+Invalid_Email = XYZZZ
+Existing_Email = XYZ
+Invalid_Password = *****
+Empty = 
+
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+
+# Positive Tests
+
+	Register user with valid username, email and password 
+		Navigate to Sign-Up Page RegistrationUrl
+		Input Firstname FirstName
+		Input Lastname LastName
+		Input Username Username
+		Input Email Email
+		Input Password Password
+		Submit Sign-Up form
+		Veriy Page should contain Email verification and field for verification code and 
+		text "You must confirm your email within 3 days of signing up. 
+		If you do not confirm your email in this timeframe, 
+		your account will be deleted and you will need to sign up for GitLab again."
+
+
+# Negative Tests
+
+Register user with same above username
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Input Username Existing_Username
+    Input Email New Email
+    Input Password Password
+    Submit Sign-Up form
+    Page should contain error message "Username has already been taken".
+
+Register user with invalid username
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Input Username Invalid_Username
+    Input Email Email
+    Input Password Password
+    Submit Sign-Up form
+    Page should contain error message "Please create a username with only alphanumeric characters."
+
+Register user with empty password
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Input Username Username
+    Input Email Email
+    Leave Password field empty
+    Submit Sign-Up form
+    Page should contain error message "Must be between 8-128 characters"
+
+Register user with invalid email
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Input Username Username
+    Input invalid Email Invalid_Email
+    Input Password Password
+    Submit Sign-Up form
+    Verify page should contain error message "Please provide a valid email address."
+
+Register user without recaptcha
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Input Username Username
+    Input Email Email
+    Input Password Password
+    Do not complete recaptcha
+    Submit Sign-Up form
+    Verify page should contain error message "Please complete the reCAPTCHA"
+
+Register user with empty firstname
+    Navigate to Sign-Up Page RegistrationUrl
+    Leave Firstname field empty
+    Input Lastname LastName
+    Input Username Username
+    Input Email Email
+    Input Password Password
+    Submit Sign-Up form
+    Verify page should contain error message "This field is required."
+
+Register user with empty lastname
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Leave Lastname field empty
+    Input Username Username
+    Input Email Email
+    Input Password Password
+    Submit Sign-Up form
+    Verify page should contain error message "This field is required."
+
+Register user with empty email
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Input Username Username
+    Leave Email field empty
+    Input Password Password
+    Submit Sign-Up form
+    Verify page should contain error message "Please provide a valid email address."
+
+Register user with empty username
+    Navigate to Sign-Up Page RegistrationUrl
+    Input Firstname FirstName
+    Input Lastname LastName
+    Leave Username field empty
+    Input Email Email
+    Input Password Password
+    Submit Sign-Up form
+    Verify page should contain error message "Username is too short (minimum is 2 characters)."
+
+
+

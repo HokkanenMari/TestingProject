@@ -1,0 +1,72 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+ 
+Pre Condition	Open browser.
+				Create a project in https://gitlab.com/dashboard/projects
+Post Condition	Close all browsers
+Tags			Issue, TS-1-Issue
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+
+# TODO: Write Issue creation field variables, Updated name of the issue
+
+IssueUrl = https://gitlab.com/marihokkanen/testiprojekti/-/work_items/
+IssueName = XYZ
+Updated_IssueName = XYZZZ
+ProjectName = XYZ
+DescriptionText = XYZ
+
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Tests
+
+Create issue
+    Navigate to Project page
+    Navigate to Work items section
+    Click "New item"
+	Pick type Issue
+    Input Issue Title IssueName
+    Input Issue Description DescriptionText
+    Create Issue
+    Verify page should show IssueName on All Items list
+
+Update name of issue
+    Navigate to existing issue
+    Click Edit
+    Update Issue Title to Updated_IssueName
+    Save changes
+    Verify page should show Updated_IssueName as the name of Issue 
+	and in Activity section: "User changed title from IssueName to Updated_IssueName just now"
+
+Create second issue with previous updated name
+    Navigate to Work items section
+	Click "New item"
+	Pick type Issue
+    Input Issue Title Updated_IssueName
+    Input Issue Description DescriptionText
+    Create Issue
+    Verify page should show Updated_IssueName on All Items list
+
+Delete first issue
+    Navigate to Work Items section.
+	Choose first issue.
+	Click three dots on the right and pick Delete issue.
+    Click Delete issue
+    Confirm deletion
+    Verify issue is removed from issue list
+
+
+
+
+
